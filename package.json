@@ -3,6 +3,7 @@
   "version": "1.0.5",
   "description": "A prototypical class that makes it easy to create Components with nodes, a powerfull instance configuration system and a react-like API.",
   "main": "Dist/NodeProto.js",
+  "build": "npm i && npm run build",
   "scripts": {
     "test": "npm run build && npm run jest",
     "build": "npm run babel && npm run uglify",

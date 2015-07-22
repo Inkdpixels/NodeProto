@@ -294,6 +294,7 @@
             this.states = {};
             this.observers = {};
             this.el = element || doc.createElement('div');
+            this.elementCache = {};
 
             this._validateAndSetProps(opts.propTypes);
             this._setInitialStates();
@@ -327,7 +328,17 @@
             }
         }
 
-        getElement() {
+        getElement(query) {
+            if ('string' === typeof query) {
+                let elements = [].slice.call(this.elementsCache[query] || this.el.querySelectorAll(query));
+
+                if (!this.elementCache[query] && elements.length) {
+                    this.elementCache[query] = elements;
+                }
+
+                return elements;
+            }
+
             return this.el;
         }
 
