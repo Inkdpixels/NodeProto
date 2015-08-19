@@ -53,6 +53,6 @@
     "sourceFolder": "Src/",
     "distributionFolder": "Dist/",
     "entryFile": "Component.js",
-    "globalPackageName": "component"
+    "globalPackageName": "reductComponent"
   }
 }
