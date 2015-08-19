@@ -50,6 +50,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 var _reductLogger = require('@reduct/logger');
 
+var componentlogger = _reductLogger.logger.getLogger('@reduct/component');
 var messages = {
     noElement: 'No element was specified while creating a instance of a Class. Creating a detached DOM Element instead.',
     extendDeprecate: '@reduct/component.extend() is deprecated since v1.0.7 - Use the native ES6 extend instead.'
@@ -151,7 +152,7 @@ var Component = (function () {
         opts = _isObject(opts) ? opts : {};
 
         if (!_isDefined(element)) {
-            _reductLogger.logger.warn(messages.noElement);
+            componentlogger.warn(messages.noElement);
         }
 
         this._passedProps = opts.props || {};
@@ -342,7 +343,7 @@ var Component = (function () {
     }, {
         key: 'extend',
         value: function extend() {
-            _reductLogger.logger.error(messages.extendDeprecate);
+            componentlogger.error(messages.extendDeprecate);
         }
     }]);
 

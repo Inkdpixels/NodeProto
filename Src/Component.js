@@ -2,6 +2,7 @@
 
 import { logger } from '@reduct/logger';
 
+const componentlogger = logger.getLogger('@reduct/component');
 const messages = {
     noElement: 'No element was specified while creating a instance of a Class. Creating a detached DOM Element instead.',
     extendDeprecate: '@reduct/component.extend() is deprecated since v1.0.7 - Use the native ES6 extend instead.'
@@ -101,7 +102,7 @@ class Component {
         opts = _isObject(opts) ? opts : {};
 
         if (!_isDefined(element)) {
-            logger.warn(messages.noElement);
+            componentlogger.warn(messages.noElement);
         }
 
         this._passedProps = opts.props || {};
@@ -266,7 +267,7 @@ class Component {
      * @deprecated since version 1.1.0
      */
     extend() {
-        logger.error(messages.extendDeprecate);
+        componentlogger.error(messages.extendDeprecate);
     }
 }
 
