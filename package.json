@@ -46,12 +46,13 @@
   },
   "homepage": "https://github.com/reduct/component#readme",
   "devDependencies": {
-    "@reduct/build-tools": "^1.4.5"
+    "@reduct/build-tools": "^1.5.2",
+    "@reduct/logger": "^1.0.2"
   },
   "reduct": {
     "sourceFolder": "Src/",
     "distributionFolder": "Dist/",
     "entryFile": "Component.js",
-    "globalPackageName": "component"
+    "globalPackageName": "reductComponent"
   }
 }
