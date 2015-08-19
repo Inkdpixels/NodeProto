@@ -50,7 +50,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 var _reductLogger = require('@reduct/logger');
 
-var componentlogger = _reductLogger.logger.getLogger('@reduct/component');
+var componentLogger = _reductLogger.logger.getLogger('@reduct/component');
 var messages = {
     noElement: 'No element was specified while creating a instance of a Class. Creating a detached DOM Element instead.',
     extendDeprecate: '@reduct/component.extend() is deprecated since v1.0.7 - Use the native ES6 extend instead.'
@@ -152,7 +152,7 @@ var Component = (function () {
         opts = _isObject(opts) ? opts : {};
 
         if (!_isDefined(element)) {
-            componentlogger.warn(messages.noElement);
+            componentLogger.warn(messages.noElement);
         }
 
         this._passedProps = opts.props || {};
@@ -343,7 +343,7 @@ var Component = (function () {
     }, {
         key: 'extend',
         value: function extend() {
-            componentlogger.error(messages.extendDeprecate);
+            componentLogger.error(messages.extendDeprecate);
         }
     }]);
 
@@ -362,7 +362,7 @@ module.exports = exports['default'];
 /**
  *
  * @name @reduct/logger
- * @version 1.1.0
+ * @version 1.0.2
  * @license MIT
  *
  * @author Tyll Weiß <inkdpixels@gmail.com>
@@ -377,8 +377,8 @@ module.exports = exports['default'];
         isTestingEnv: false,
         packageVersion: {
             major: 1,
-            minor: 1,
-            patch: 0
+            minor: 0,
+            patch: 2
         }
     };
     var world = this;
@@ -429,13 +429,21 @@ var logLevels = {
 };
 
 var Logger = (function () {
+    /**
+     * Sets up internal properties for the logger.
+     *
+     * @param namespace {String} The optional namespace for the logger.
+     * @param logLevel {Number} The optional initial logLevel for the logger.
+     */
+
     function Logger() {
         var namespace = arguments.length <= 0 || arguments[0] === undefined ? '@reduct/logger' : arguments[0];
+        var logLevel = arguments.length <= 1 || arguments[1] === undefined ? logLevels.ALL : arguments[1];
 
         _classCallCheck(this, Logger);
 
         this.version = reductOpts.packageVersion;
-        this.logLevel = logLevels.ALL;
+        this.logLevel = logLevel;
         this.namespace = namespace;
 
         this.instances = [];
@@ -457,7 +465,7 @@ var Logger = (function () {
         value: function getLogger() {
             var namespace = arguments.length <= 0 || arguments[0] === undefined ? this.namespace : arguments[0];
 
-            var logger = new Logger(namespace);
+            var logger = new Logger(namespace, this.logLevel);
 
             this.instances.push(logger);
 
