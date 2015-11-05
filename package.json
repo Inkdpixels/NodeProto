@@ -1,12 +1,12 @@
 {
   "name": "@reduct/component",
-  "version": "1.1.1",
+  "version": "2.0.0",
   "description": "A prototypical class that makes it easy to create Components with nodes, a powerfull instance configuration system and a react-like API.",
   "main": "Dist/Component.js",
   "scripts": {
     "test": "npm run build-tests && reduct",
     "reduct": "reduct",
-    "build-tests": "./node_modules/@reduct/build-tools/node_modules/.bin/babel Tests/ExampleComponents/Src --out-dir Tests/ExampleComponents/Dist"
+    "build-tests": "./node_modules/@reduct/build-tools/node_modules/.bin/babel Tests/ExampleComponents/Src --out Tests/ExampleComponents/Dist"
   },
   "repository": {
     "type": "git",
@@ -46,13 +46,13 @@
   },
   "homepage": "https://github.com/reduct/component#readme",
   "devDependencies": {
-    "@reduct/build-tools": "^1.4.5"
+    "@reduct/build-tools": "^1.5.5",
+    "@reduct/logger": "^1.1.0"
   },
   "reduct": {
     "sourceFolder": "Src/",
     "distributionFolder": "Dist/",
     "entryFile": "Component.js",
-    "globalPackageName": "reductComponent",
-    "coverageReportFile": "lcov.info"
+    "globalPackageName": "reduct.component"
   }
 }

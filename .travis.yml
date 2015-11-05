@@ -1,6 +1,6 @@
 language: node_js
 node_js:
-  - "iojs"
+  - "stable"
 
 notifications:
   email: false
@@ -15,4 +15,4 @@ before_install:
   - npm install -g codeclimate-test-reporter
 
 after_script:
-  - node Build/PublishCodeCoverage.js
+  - npm run reduct publish-coverage

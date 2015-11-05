@@ -16,13 +16,13 @@ describe('@reduct/component: State API', function () {
     });
 
     it('should return undefined if no state was set.', function () {
-        expect(instance.getState('myState')).to.be.undefined;
+        expect(instance.getState('anotherState')).to.be.undefined;
     });
 
     it('should return the value of a state which was previously set.', function () {
-        instance.setState('myState', 1);
+        instance.setState({ 'myState': 2 });
 
-        expect(instance.getState('myState')).to.equal(1);
+        expect(instance.getState('myState')).to.equal(2);
     });
 
     it('should fire an general change event if any state was set.', function () {
@@ -30,11 +30,15 @@ describe('@reduct/component: State API', function () {
 
         instance.on('change', eventCallback);
 
-        instance.setState('myState', 1);
+        instance.setState({ 'myState': 2 });
 
         expect(eventCallback).to.have.been.called.with({
-            key: 'myState',
-            value: 1
+            delta: {
+                'myState': 2
+            },
+            previousState: {
+                'myState': 1
+            }
         });
     });
 
@@ -43,22 +47,48 @@ describe('@reduct/component: State API', function () {
 
         instance.on('change:myState', eventCallback);
 
-        instance.setState('myState', 1);
+        instance.setState({ 'myState': 2 });
 
         expect(eventCallback).to.have.been.called.with({
             key: 'myState',
-            value: 1
+            value: 2,
+            previousValue: 1
         });
     });
 
-    it('should return the initial state if present.', function () {
-        expect(instance.getState('anotherState')).to.be.true;
+    it('should not fire change events if the silent option is true.', function () {
+        const eventCallback = chai.spy(function (payload) { });
+
+        instance.on('change:myState', eventCallback);
+        instance.on('change', eventCallback);
+
+        instance.setState({
+            myState: 2
+        }, {
+            silent: true
+        });
+
+        expect(eventCallback).to.not.have.been.called();
     });
 
-    it('should return an empty object if no getInitialStates() method was present.', function () {
+    it('should return the initial state if present.', function () {
+        expect(instance.getState('myState')).to.equal(1);
+    });
+
+    it('should return an empty object if no getInitialState() method was present.', function () {
         var instanceWithoutDefaults = new ComponentWithoutDefaults();
 
-        expect(instanceWithoutDefaults.getInitialStates()).to.be.an('object');
+        expect(instanceWithoutDefaults.getInitialState()).to.be.an('object');
+    });
+
+    it('should only set state diffs if each key was described in the getInitialState() method.', function () {
+        var instanceWithoutDefaults = new ComponentWithoutDefaults();
+
+        expect(function callGetWithoutHavingRegisteredTheRequestedItem () {
+            instanceWithoutDefaults.setState({ myState: 2 });
+        }).to.throw("@reduct/component Error: Please specify an initial value for 'myState' in your getInitialState() method.");
+
+        expect(instanceWithoutDefaults.getState('myState')).to.be.undefined;
     });
 
     afterEach(function () {

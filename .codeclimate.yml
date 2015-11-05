@@ -7,4 +7,6 @@ ratings:
 exclude_paths:
  - "Tests/**"
  - "Dist/**"
- - "Build/**"
+ - "CHANGELOG.md"
+ - "package.json"
+ - "README.md"
