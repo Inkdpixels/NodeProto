@@ -4,7 +4,7 @@
   "main": "dist/component.js",
   "scripts": {
     "postinstall": "npm run build",
-    "build": "babel src --out-dir dist",
+    "build": "browserify src/component.js -o dist/component.js --standalone reduct.Component -t [ babelify --stage 0 ]",
     "lint": "xo src/**/*.js",
     "mocha": "export TEST=true && find ./src -name '*.spec.js' | xargs istanbul cover -x *.spec.js _mocha -- -R spec --compilers js:babel/register",
     "test": "npm run lint && npm run mocha && npm run build",
@@ -72,5 +72,9 @@
   "release": {
     "analyzeCommits": "@inkdpixels/commit-analyzer",
     "generateNotes": "@inkdpixels/release-notes-generator"
+  },
+  "dependencies": {
+    "babelify": "^6.4.0",
+    "browserify": "^12.0.1"
   }
 }
